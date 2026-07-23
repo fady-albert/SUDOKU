@@ -3,6 +3,7 @@ const modeBtn = document.getElementById('mode');
 const body = document.querySelector('body');
 const modeBtnTxt = document.getElementById('modeIcon');
 const mainCon = document.getElementById('con');
+const numCon = document.getElementById('numCon');
 
 // js data
 const savedMode = localStorage.getItem('mode') || '';
@@ -36,7 +37,7 @@ if(savedMode === 'dark') {
 
 // the main function
 function createSquare() {
-    for(let i = 0; i < (squareH + squareW); i++) {
+    for(let i = 0; i < (squareH * squareW); i++) {
         const div = document.createElement('div');
         div.classList.add('square');
         mainCon.appendChild(div);
@@ -47,14 +48,40 @@ function createSquare() {
 }
 
 function createNumPlace(place) {
-    for(let i = 0; i < (squareDataH + squareDataW); i++) {
+    for(let i = 0; i < (squareDataH * squareDataW); i++) {
         const div = document.createElement('div');
         div.classList.add('num');
         div.style.width = max / squareDataH + 'px';
         div.style.height = max / squareDataH + 'px';
         place.appendChild(div)
-        place.style.gridTemplateColumns = `repeat(${squareW}, auto)`
+        place.style.gridTemplateColumns = `repeat(${squareDataW}, auto)`
     }
 }
 
+function choose() {
+
+    const data = document.querySelector('.num');
+
+    let nums = [];
+    // get the numbers
+    for(let i = 0; i < (squareDataH * squareDataW); i++) {
+        nums.push(i + 1);
+    }
+
+    // send nnumbers into numBar function
+    nums.forEach(data => {
+        numBar(data)
+    });
+
+}
+
+function numBar(num) {
+    // add numbers into buttons then add buttons to HTML
+    const btn = document.createElement('button');
+    btn.textContent = num;
+    numCon.appendChild(btn);
+}
+
+// run the main code
 createSquare()
+choose()
