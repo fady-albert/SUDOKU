@@ -12,7 +12,7 @@ let squareW = 2;
 let squareDataH = 2;
 let squareDataW = 2;
 let max = 100;
-let choosenNum;
+let choosenNum = 0;
 
 // mode function
 function mode() {
@@ -61,8 +61,6 @@ function createNumPlace(place) {
 
 function numbers() {
 
-    const data = document.querySelector('.num');
-
     let nums = [];
     // get the numbers
     for(let i = 0; i < (squareDataH * squareDataW); i++) {
@@ -88,7 +86,7 @@ function choose() {
     const btn = document.querySelectorAll('.numBarBtn');
     btn.forEach(button => {
         button.addEventListener('click', () => {
-            choosenNum = btn.textContent;
+            choosenNum = button.textContent;
         })
         if(button.textContent === choosenNum) {
             btn.classList.add('active');
@@ -96,7 +94,24 @@ function choose() {
     })
 }
 
+function addText(con, value) {
+    const p = document.createElement('p');
+    p.textContent = value;
+    con.appendChild(p);
+}
+
+function addChoose() {
+    const data = document.querySelectorAll('.num');
+    
+    data.forEach(num => {
+        num.addEventListener('click', () => {
+            addText(num, choosenNum)
+        })
+    })
+}
+
 // run the main code
 createSquare()
 numbers()
 choose()
+addChoose()
