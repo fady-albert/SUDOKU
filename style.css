@@ -17,6 +17,9 @@ body{
     width: 100%;
     min-height: 100vh;
     background: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     transition: all 1s ease-out;
 }
 
@@ -59,4 +62,19 @@ body.dark .mode button{
 
 .mode button span{
     font-size: 25px;
+}
+
+/* main section */
+.main{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.con{
+    display: grid;
+    align-items: center;
+    justify-content: center;
 }
