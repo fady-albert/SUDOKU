@@ -77,4 +77,14 @@ body.dark .mode button{
     display: grid;
     align-items: center;
     justify-content: center;
+    gap: 10px;
+}
+
+.square{
+    background: red;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px;
 }
