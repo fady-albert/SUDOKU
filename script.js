@@ -10,6 +10,7 @@ let squareH = 2;
 let squareW = 2;
 let squareDataH = 2;
 let squareDataW = 2;
+let max = 100;
 
 // mode function
 function mode() {
@@ -49,9 +50,8 @@ function createNumPlace(place) {
     for(let i = 0; i < (squareDataH + squareDataW); i++) {
         const div = document.createElement('div');
         div.classList.add('num');
-        div.style.width = '25px';
-        div.style.height = '25px';
-        div.style.background = '#000'
+        div.style.width = max / squareDataH + 'px';
+        div.style.height = max / squareDataH + 'px';
         place.appendChild(div)
         place.style.gridTemplateColumns = `repeat(${squareW}, auto)`
     }
