@@ -87,14 +87,20 @@ function choose() {
     btn.forEach(button => {
         button.addEventListener('click', () => {
             choosenNum = button.textContent;
+            
+            btn.forEach(b => {
+                b.classList.remove('active')
+            })
+
+            if(button.textContent === choosenNum) {
+                button.classList.add('active');
+            }
         })
-        if(button.textContent === choosenNum) {
-            btn.classList.add('active');
-        }
     })
 }
 
 function addText(con, value) {
+    if(value === 0) return;
     const p = document.createElement('p');
     p.textContent = value;
     con.appendChild(p);
@@ -106,9 +112,17 @@ function addChoose() {
     data.forEach(num => {
         num.addEventListener('click', () => {
             num.innerHTML = '';
-            addText(num, choosenNum)
+            addText(num, choosenNum);
         })
     })
+}
+
+function showNumBar() {
+    numCon.classList.add('show');
+}
+
+function hideNumBar() {
+    numCon.classList.remove('show');
 }
 
 // run the main code
@@ -116,3 +130,4 @@ createSquare()
 numbers()
 choose()
 addChoose()
+showNumBar()

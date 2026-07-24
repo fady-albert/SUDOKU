@@ -114,6 +114,7 @@ body.dark .square{
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
 }
 
 body.dark .num{
@@ -171,10 +172,30 @@ body.dark .numCon{
     background: var(--black);
     color: var(--white);
     cursor: pointer;
+    user-select: none;
     transition: all 1s ease;
 }
 
 body.dark .numCon button{
     background: var(--white);
     color: var(--black);
+}
+
+.numCon button:hover{
+    scale: 1.05;
+}
+
+.numCon button:active{
+    scale: 0.95;
+}
+
+.numCon button.active{
+    background: var(--white);
+    color: var(--black);
+    pointer-events: none;
+}
+
+body.dark .numCon button.active{
+    background: var(--black);
+    color: var(--white);
 }
