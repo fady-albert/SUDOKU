@@ -126,6 +126,8 @@ body.dark .num{
     font-family: sans-serif;
     font-weight: 600;
     color: var(--white);
+    pointer-events: none;
+    user-select: none;
     transition: all 1s ease;
 }
 

@@ -40,7 +40,7 @@ if(savedMode === 'dark') {
 function createSquare() {
     for(let i = 0; i < (squareH * squareW); i++) {
         const div = document.createElement('div');
-        div.classList.add('square');
+        div.classList.add('square', `con${i}`);
         mainCon.appendChild(div);
         mainCon.style.gridTemplateColumns = `repeat(${squareW}, auto)`
 
@@ -113,6 +113,8 @@ function addChoose() {
         num.addEventListener('click', () => {
             num.innerHTML = '';
             addText(num, choosenNum);
+
+            lose()
         })
     })
 }
@@ -123,6 +125,10 @@ function showNumBar() {
 
 function hideNumBar() {
     numCon.classList.remove('show');
+}
+
+function lose() {
+    
 }
 
 // run the main code
