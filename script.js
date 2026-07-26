@@ -111,8 +111,8 @@ function addChoose() {
     
     data.forEach(num => {
         num.addEventListener('click', () => {
-            num.innerHTML = '';
             if(choosenNum === 0) return;
+            num.innerHTML = '';
 
             addText(num, choosenNum);
 
