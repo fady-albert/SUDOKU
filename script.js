@@ -12,6 +12,7 @@ let squareW = 2;
 let squareDataH = 2;
 let squareDataW = 2;
 let max = 100;
+let nums = [];
 let choosenNum = 0;
 
 // mode function
@@ -61,7 +62,6 @@ function createNumPlace(place) {
 
 function numbers() {
 
-    let nums = [];
     // get the numbers
     for(let i = 0; i < (squareDataH * squareDataW); i++) {
         nums.push(i + 1);
@@ -112,6 +112,8 @@ function addChoose() {
     data.forEach(num => {
         num.addEventListener('click', () => {
             num.innerHTML = '';
+            if(choosenNum === 0) return;
+
             addText(num, choosenNum);
 
             lose()
@@ -128,7 +130,7 @@ function hideNumBar() {
 }
 
 function lose() {
-    
+
 }
 
 // run the main code
