@@ -41,7 +41,7 @@ if(savedMode === 'dark') {
 function createSquare() {
     for(let i = 0; i < (squareH * squareW); i++) {
         const div = document.createElement('div');
-        div.classList.add('square');
+        div.classList.add('square', `con${i}`);
         mainCon.appendChild(div);
         mainCon.style.gridTemplateColumns = `repeat(${squareW}, auto)`
 
@@ -52,8 +52,7 @@ function createSquare() {
 function createNumPlace(place) {
     for(let i = 0; i < (squareDataH * squareDataW); i++) {
         const div = document.createElement('div');
-        div.id = i;
-        div.classList.add('num');
+        div.classList.add('num', `box${i}`);
         div.style.width = max / squareDataH + 'px';
         div.style.height = max / squareDataH + 'px';
         place.appendChild(div)
@@ -129,6 +128,12 @@ function showNumBar() {
 function hideNumBar() {
     numCon.classList.remove('show');
 }
+
+function game() {
+    const maxNum = (squareDataH * squareDataW);
+    
+}
+game()
 
 function lose() {
 
