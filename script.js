@@ -131,9 +131,12 @@ function hideNumBar() {
 
 function game() {
     const maxNum = (squareDataH * squareDataW);
-    
+    for(let i = 0; i < maxNum; i++) {
+        const rand = Math.floor(Math.random() * maxNum)
+        const box = document.querySelector(`.con${i} .box${rand}`);
+        addText(box, nums[i])
+    }
 }
-game()
 
 function lose() {
 
@@ -145,3 +148,4 @@ numbers()
 choose()
 addChoose()
 showNumBar()
+game()
