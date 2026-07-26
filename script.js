@@ -7,10 +7,10 @@ const numCon = document.getElementById('numCon');
 
 // js data
 const savedMode = localStorage.getItem('mode') || '';
-let squareH = 2;
-let squareW = 2;
-let squareDataH = 2;
-let squareDataW = 2;
+let squareH = 3;
+let squareW = 3;
+let squareDataH = 3;
+let squareDataW = 3;
 let max = 100;
 let nums = [];
 let choosenNum = 0;
@@ -41,7 +41,7 @@ if(savedMode === 'dark') {
 function createSquare() {
     for(let i = 0; i < (squareH * squareW); i++) {
         const div = document.createElement('div');
-        div.classList.add('square', `con${i}`);
+        div.classList.add('square');
         mainCon.appendChild(div);
         mainCon.style.gridTemplateColumns = `repeat(${squareW}, auto)`
 
@@ -52,6 +52,7 @@ function createSquare() {
 function createNumPlace(place) {
     for(let i = 0; i < (squareDataH * squareDataW); i++) {
         const div = document.createElement('div');
+        div.id = i;
         div.classList.add('num');
         div.style.width = max / squareDataH + 'px';
         div.style.height = max / squareDataH + 'px';
