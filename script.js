@@ -102,6 +102,7 @@ function choose() {
 function addText(con, value) {
     if(value === 0) return;
     const p = document.createElement('p');
+    p.classList.add('text')
     p.textContent = value;
     con.appendChild(p);
 }
@@ -112,6 +113,8 @@ function addChoose() {
     data.forEach(num => {
         num.addEventListener('click', () => {
             if(choosenNum === 0) return;
+            if(num.textContent.trim() !== '') return;
+
             num.innerHTML = '';
 
             addText(num, choosenNum);
@@ -134,12 +137,33 @@ function game() {
     for(let i = 0; i < maxNum; i++) {
         const rand = Math.floor(Math.random() * maxNum)
         const box = document.querySelector(`.con${i} .box${rand}`);
-        addText(box, nums[i])
+        addText(box, nums[rand])
+    }
+}
+
+function square() {
+    const maxNum = (squareH * squareW);
+
+    for(let i = 0; i < maxNum; i++) {
+        const box = document.querySelectorAll(`.con${i} .text`);
+        const used = [];
+
+        for(let place of box) {
+            const val = Number(place.textContent);
+
+            if(place.textContent === '') continue;
+
+            if(used.includes(val)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
 }
 
 function lose() {
-
+    square()
 }
 
 // run the main code
