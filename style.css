@@ -215,7 +215,7 @@ body.dark .numCon button.active{
     align-items: center;
     justify-content: space-evenly;
     flex-direction: column;
-    transition: all 1s ease;
+    transition: all .5s ease;
 }
 
 .display:not(.show){

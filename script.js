@@ -11,10 +11,10 @@ const btn = document.getElementById('btn');
 
 // js data
 const savedMode = localStorage.getItem('mode') || '';
-let squareH = 3;
-let squareW = 3;
-let squareDataH = 3;
-let squareDataW = 3;
+let squareH = 2;
+let squareW = 2;
+let squareDataH = 2;
+let squareDataW = 2;
 let max = 100;
 let nums = [];
 let choosenNum = 0;
@@ -140,7 +140,7 @@ function game() {
     const maxNum = (squareDataH * squareDataW);
     for(let i = 0; i < maxNum; i++) {
         const rand = Math.floor(Math.random() * maxNum)
-        const box = document.querySelector(`.con${i} .box${rand}`);
+        const box = document.querySelector(`.con${i} .box${i}`);
         addText(box, nums[rand])
     }
 }
@@ -158,9 +158,7 @@ function square() {
 
             if(place.textContent === '') continue;
 
-            if(used.includes(val)) {
-                console.log('rep');
-                
+            if(used.includes(val)) {                
                 return true;
             }
             
@@ -171,20 +169,46 @@ function square() {
     return false;
 }
 
+// edit it
+function rowCol() {
+    const maxNum = (squareH * squareDataH);
+
+    for(let i = 0; i < maxNum; i++) {
+        const used = [];
+        for(let j = 0; j < maxNum; j++) {
+            const box = document.querySelector(`.con${j} .box${i}`);
+            
+            const val = box.textContent.trim();
+            
+            if(val === '') continue;
+            
+            if(used.includes(val)) {
+                return true;
+            }
+
+            used.push(val)
+
+        }
+    }
+    return false;
+}
+
 function again() {
     showFun(display)
     hideFun(numCon)
     nums = [];
+    choosenNum = 0;
     numCon.innerHTML = ``;
     head.textContent = 'you lose';
     btn.textContent = 'play again';
     setTimeout(() => {
         mainCon.innerHTML = ``;
-    }, 1000);
+    }, 500);
 }
 
 function lose() {
     if(square()) again();
+    if(rowCol()) again();
 }
 
 // start
