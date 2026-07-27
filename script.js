@@ -4,6 +4,10 @@ const body = document.querySelector('body');
 const modeBtnTxt = document.getElementById('modeIcon');
 const mainCon = document.getElementById('con');
 const numCon = document.getElementById('numCon');
+const display = document.getElementById('sreen');
+const head = document.getElementById('head');
+const high = document.getElementById('high');
+const btn = document.getElementById('btn');
 
 // js data
 const savedMode = localStorage.getItem('mode') || '';
@@ -67,7 +71,7 @@ function numbers() {
         nums.push(i + 1);
     }
 
-    // send nnumbers into numBar function
+    // send numbers into numBar function
     nums.forEach(data => {
         numBar(data)
     });
@@ -124,12 +128,12 @@ function addChoose() {
     })
 }
 
-function showNumBar() {
-    numCon.classList.add('show');
+function showFun(element) {
+    element.classList.add('show');
 }
 
-function hideNumBar() {
-    numCon.classList.remove('show');
+function hideFun(element) {
+    element.classList.remove('show');
 }
 
 function game() {
@@ -141,6 +145,7 @@ function game() {
     }
 }
 
+// if there are two equal numbers in the same box
 function square() {
     const maxNum = (squareH * squareW);
 
@@ -154,22 +159,41 @@ function square() {
             if(place.textContent === '') continue;
 
             if(used.includes(val)) {
+                console.log('rep');
+                
                 return true;
-            } else {
-                return false;
             }
+            
+            used.push(val);
+                
         }
     }
+    return false;
+}
+
+function again() {
+    showFun(display)
+    hideFun(numCon)
+    nums = [];
+    numCon.innerHTML = ``;
+    head.textContent = 'you lose';
+    btn.textContent = 'play again';
+    setTimeout(() => {
+        mainCon.innerHTML = ``;
+    }, 1000);
 }
 
 function lose() {
-    square()
+    if(square()) again();
 }
 
-// run the main code
-createSquare()
-numbers()
-choose()
-addChoose()
-showNumBar()
-game()
+// start
+btn.addEventListener('click', () => {
+    createSquare()
+    numbers()
+    choose()
+    addChoose()
+    hideFun(display)
+    showFun(numCon)
+    game()
+})
