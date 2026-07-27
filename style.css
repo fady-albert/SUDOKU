@@ -262,3 +262,23 @@ body.dark .display button{
     background: var(--white);
     color: var(--black);
 }
+
+/* timer */
+.timer{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    min-width: 200px;
+    height: 50px;
+    background: var(--black);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.timer p{
+    color: var(--white);
+    font-size: 25px;
+    font-family: sans-serif;
+}
