@@ -8,6 +8,7 @@ const display = document.getElementById('sreen');
 const head = document.getElementById('head');
 const high = document.getElementById('high');
 const btn = document.getElementById('btn');
+const timer = document.getElementById('timer');
 
 // js data
 const savedMode = localStorage.getItem('mode') || '';
@@ -18,6 +19,8 @@ let squareDataW = 2;
 let max = 100;
 let nums = [];
 let choosenNum = 0;
+let second = 0;
+let timerId;
 
 // mode function
 function mode() {
@@ -169,7 +172,7 @@ function square() {
     return false;
 }
 
-// edit it
+// if there are two equal numbers in the same row or column
 function rowCol() {
     const maxNum = (squareH * squareDataH);
 
@@ -193,6 +196,18 @@ function rowCol() {
     return false;
 }
 
+function time() {
+    timerId = setInterval(() => {
+        second++
+
+        const minutes = Math.floor(second / 60);
+        const secs = Math.floor(second % 60);
+
+        timer.textContent = `${String(minutes).padStart(2, '0')} : ${String(secs).padStart(2, '0')}`
+        
+    }, 1000)
+}
+
 function again() {
     showFun(display)
     hideFun(numCon)
@@ -201,6 +216,9 @@ function again() {
     numCon.innerHTML = ``;
     head.textContent = 'you lose';
     btn.textContent = 'play again';
+    second = 0;
+    clearInterval(timerId);
+    timer.textContent = '00 : 00';
     setTimeout(() => {
         mainCon.innerHTML = ``;
     }, 500);
@@ -220,4 +238,5 @@ btn.addEventListener('click', () => {
     hideFun(display)
     showFun(numCon)
     game()
+    time()
 })
