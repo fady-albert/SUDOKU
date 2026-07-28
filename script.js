@@ -22,6 +22,7 @@ let choosenNum = 0;
 let second = 0;
 let timerId;
 let board;
+let winner = false;
 
 // mode function
 function mode() {
@@ -139,6 +140,7 @@ function addChoose() {
             num.innerHTML = '';
 
             addText(num, choosenNum);
+            SUTN()
 
             action()
         })
@@ -298,7 +300,8 @@ function time() {
 
         timer.textContent = `${String(minutes).padStart(2, '0')} : ${String(secs).padStart(2, '0')}`
         
-        localStorage.setItem('high', String(minutes).padStart(2, '0') + ':' + String(secs).padStart(2, '0'))
+        if(winner) localStorage.setItem('high', String(minutes).padStart(2, '0') + ':' + String(secs).padStart(2, '0'));
+
     }, 1000)
 
 }
@@ -319,6 +322,7 @@ function again() {
 
 function win() {
     again()
+    winner = true
     head.textContent = 'you win';
     btn.textContent = 'play again';
     high.textContent = localStorage.getItem('high');
@@ -377,6 +381,21 @@ function del(count) {
         if(board[row][col] !== 0) {
             board[row][col] = 0;
             count--
+        }
+    }
+}
+
+function SUTN() {
+    const size = squareH * squareDataH;
+
+    for(let i = 1; i <= size; i++) {
+        const used = [...document.querySelectorAll('.text')].filter(p => Number(p.textContent) === i).length;
+        const button = [...document.querySelectorAll('.numBarBtn')].find(btn => Number(btn.textContent) === i);
+        
+        button.disabled = used >= size;
+
+        if (button.disabled && Number(choosenNum) === i) {
+            choosenNum = 0;
         }
     }
 }
