@@ -21,6 +21,7 @@ let nums = [];
 let choosenNum = 0;
 let second = 0;
 let timerId;
+let board;
 
 // mode function
 function mode() {
@@ -152,19 +153,57 @@ function hideFun(element) {
     element.classList.remove('show');
 }
 
-function game() {
-    const maxNum = (squareDataH * squareDataW);
+function isSafe(board, row, col, num) {
+    const maxNum = squareH * squareDataH;
     for(let i = 0; i < maxNum; i++) {
-        const rand = Math.floor(Math.random() * maxNum)
-        const box = document.querySelector(`.con${i} .box${i}`);
-        addText(box, nums[rand])
+        if(board[row][i] === num) return false;
     }
+
+    for(let i = 0; i < maxNum; i++) {
+        if(board[i][col] === num) return false;
+    }
+
+    const startR = Math.floor(row / squareH) * squareH;
+    const startC = Math.floor(col / squareW) * squareW;
+
+    for(let r = startR; r < startR + squareDataH; r++) {
+        for(let c = startC; c < startC + squareDataW; c++) {
+            if(board[r][c] === num) return false;
+        }
+    }
+
+    return true;
+}
+
+function solve(board) {
+    const maxNum = squareH * squareDataH;
+    for(let row = 0; row < maxNum; row++) {
+        for(let col = 0; col < maxNum; col++) {
+            if(board[row][col] === 0) {
+                let numbers = []
+
+                for(let i = 1; i <= maxNum; i++) {
+                    numbers.push(i);
+                }
+
+                numbers.sort(() => Math.random() -0.5)
+
+                for(let num of numbers) {
+                    if(isSafe(board, row, col, num)) {
+                        board[row][col] = num;
+
+                        if(solve(board)) return true;
+                        board[row][col] = 0;
+                    }
+                }
+                return false;
+            }
+        }
+    }
+    return true;
 }
 
 function getBoard() {
-    const maxNum = squareH * squareDataH;
-    const board = Array.from({length: maxNum}, () => []);
-
     const box = document.querySelectorAll('.num');
 
     box.forEach((b, index) => {
@@ -279,9 +318,34 @@ function lose() {
     if(square() || rowCol()) again();
 }
 
+function start() {
+    const size = squareH * squareW;
+    board = Array.from({length: size}, () => Array(size).fill(0));
+
+    solve(board)
+    console.table(board)
+}
+
+function render() {
+    const cells = document.querySelectorAll(".num");
+
+    cells.forEach(cell => {
+        const row = Number(cell.dataset.row);
+        const col = Number(cell.dataset.col);
+
+        cell.innerHTML = "";
+
+        if (board[row][col] !== 0) {
+            addText(cell, board[row][col]);
+        }
+    });
+}
+
 // start
 btn.addEventListener('click', () => {
     createSquare()
+    start()
+    render()
     numbers()
     choose()
     addChoose()
@@ -289,4 +353,5 @@ btn.addEventListener('click', () => {
     showFun(numCon)
     // game()
     time()
+
 })
