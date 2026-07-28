@@ -12,10 +12,10 @@ const timer = document.getElementById('timer');
 
 // js data
 const savedMode = localStorage.getItem('mode') || '';
-let squareH = 3;
-let squareW = 3;
-let squareDataH = 3;
-let squareDataW = 3;
+let squareH = 2;
+let squareW = 2;
+let squareDataH = 2;
+let squareDataW = 2;
 let max = 100;
 let nums = [];
 let choosenNum = 0;
@@ -140,7 +140,7 @@ function addChoose() {
 
             addText(num, choosenNum);
 
-            lose()
+            action()
         })
     })
 }
@@ -219,7 +219,7 @@ function getBoard() {
 }
 // if there are two equal numbers in the same box
 function square() {
-    const maxNum = (squareH * squareW);
+    const maxNum = (squareH * squareDataH);
 
     for(let i = 0; i < maxNum; i++) {
         const box = document.querySelectorAll(`.con${i} .text`);
@@ -298,7 +298,9 @@ function time() {
 
         timer.textContent = `${String(minutes).padStart(2, '0')} : ${String(secs).padStart(2, '0')}`
         
+        localStorage.setItem('high', String(minutes).padStart(2, '0') + ':' + String(secs).padStart(2, '0'))
     }, 1000)
+
 }
 
 function again() {
@@ -307,18 +309,39 @@ function again() {
     nums = [];
     choosenNum = 0;
     numCon.innerHTML = ``;
-    head.textContent = 'you lose';
-    btn.textContent = 'play again';
     second = 0;
     clearInterval(timerId);
-    timer.textContent = '00 : 00';
+    timer.textContent = localStorage.getItem('high');
     setTimeout(() => {
         mainCon.innerHTML = ``;
     }, 500);
 }
 
+function win() {
+    again()
+    head.textContent = 'you win';
+    btn.textContent = 'play again';
+    high.textContent = localStorage.getItem('high');
+}
+
 function lose() {
-    if(square() || rowCol()) again();
+    head.textContent = 'you lose';
+    btn.textContent = 'play again';
+}
+
+function action() {
+    // lose
+    if(square() || rowCol()) {
+        again()
+        lose()
+        return;
+    };
+    // win
+    const box = document.querySelectorAll('.num');
+    const all = [...box].every(b => b.textContent.trim() !== '');
+    if(all){
+        win()
+    }
 }
 
 function start() {
@@ -362,7 +385,7 @@ function del(count) {
 btn.addEventListener('click', () => {
     createSquare()
     start()
-    del(20)
+    del(10)
     render()
     numbers()
     choose()
@@ -371,3 +394,5 @@ btn.addEventListener('click', () => {
     showFun(numCon)
     time()
 })
+
+high.textContent = localStorage.getItem('high');

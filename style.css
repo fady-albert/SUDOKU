@@ -241,6 +241,18 @@ body.dark h1{
     color: var(--white);
 }
 
+.display p{
+    font-size: 25px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: bold;
+    transition: all 1s ease;
+    color: var(--black);
+}
+
+body.dark .display p{
+    color: var(--white);
+}
+
 .display button{
     min-width: 100px;
     height: 50px;
@@ -275,10 +287,19 @@ body.dark .display button{
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: all 1s ease;
+}
+
+body.dark .timer{
+    background: var(--white);
 }
 
 .timer p{
     color: var(--white);
     font-size: 25px;
     font-family: sans-serif;
+}
+
+body.dark .timer p{
+    color: var(--black);
 }
