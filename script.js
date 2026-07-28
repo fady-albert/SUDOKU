@@ -12,10 +12,10 @@ const timer = document.getElementById('timer');
 
 // js data
 const savedMode = localStorage.getItem('mode') || '';
-let squareH = 2;
-let squareW = 2;
-let squareDataH = 2;
-let squareDataW = 2;
+let squareH = 3;
+let squareW = 3;
+let squareDataH = 3;
+let squareDataW = 3;
 let max = 100;
 let nums = [];
 let choosenNum = 0;
@@ -186,7 +186,10 @@ function solve(board) {
                     numbers.push(i);
                 }
 
-                numbers.sort(() => Math.random() -0.5)
+                for(let i = numbers.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [numbers[i], numbers[j]] = [numbers[j], numbers[i]]
+                }
 
                 for(let num of numbers) {
                     if(isSafe(board, row, col, num)) {
@@ -341,17 +344,30 @@ function render() {
     });
 }
 
+function del(count) {
+    const size = squareH * squareDataH;
+
+    while(count > 0) {
+        const row = Math.floor(Math.random() * size);
+        const col = Math.floor(Math.random() * size);
+
+        if(board[row][col] !== 0) {
+            board[row][col] = 0;
+            count--
+        }
+    }
+}
+
 // start
 btn.addEventListener('click', () => {
     createSquare()
     start()
+    del(20)
     render()
     numbers()
     choose()
     addChoose()
     hideFun(display)
     showFun(numCon)
-    // game()
     time()
-
 })
