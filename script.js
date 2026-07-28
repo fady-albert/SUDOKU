@@ -52,16 +52,29 @@ function createSquare() {
         mainCon.appendChild(div);
         mainCon.style.gridTemplateColumns = `repeat(${squareW}, auto)`
 
-        createNumPlace(div)
+        createNumPlace(div, i)
     }
 }
 
-function createNumPlace(place) {
+function createNumPlace(place, index) {
     for(let i = 0; i < (squareDataH * squareDataW); i++) {
         const div = document.createElement('div');
         div.classList.add('num', `box${i}`);
         div.style.width = max / squareDataH + 'px';
         div.style.height = max / squareDataH + 'px';
+
+        const squareRow = Math.floor(index / squareW);
+        const squareCol = index % squareW;
+
+        const localRow = Math.floor(i / squareDataW);
+        const localCol = i % squareDataW;
+
+        const row = squareRow * squareDataH + localRow
+        const col = squareCol * squareDataW + localCol
+
+        div.dataset.row = row
+        div.dataset.col = col
+
         place.appendChild(div)
         place.style.gridTemplateColumns = `repeat(${squareDataW}, auto)`
     }
@@ -148,6 +161,20 @@ function game() {
     }
 }
 
+function getBoard() {
+    const maxNum = squareH * squareDataH;
+    const board = Array.from({length: maxNum}, () => []);
+
+    const box = document.querySelectorAll('.num');
+
+    box.forEach((b, index) => {
+        const row = Number(b.dataset.row)
+        const col = Number(b.dataset.col)
+
+        board[row][col] = b.textContent.trim();
+    })
+    return board;
+}
 // if there are two equal numbers in the same box
 function square() {
     const maxNum = (squareH * squareW);
@@ -174,25 +201,49 @@ function square() {
 
 // if there are two equal numbers in the same row or column
 function rowCol() {
-    const maxNum = (squareH * squareDataH);
+    const board = getBoard();
+    const maxNum = board.length;
 
-    for(let i = 0; i < maxNum; i++) {
+    for(let row = 0; row < maxNum; row++) {
         const used = [];
-        for(let j = 0; j < maxNum; j++) {
-            const box = document.querySelector(`.con${j} .box${i}`);
-            
-            const val = box.textContent.trim();
-            
+
+        for(let col = 0; col < maxNum; col++) {
+            const square = Math.floor(row / squareDataW) * squareW + Math.floor(col / squareDataH);
+
+            const cell = (row % squareDataH) * squareDataW + (col % squareDataW);
+
+            const val = board[row][col];
+
             if(val === '') continue;
-            
+
             if(used.includes(val)) {
                 return true;
             }
 
             used.push(val)
-
         }
     }
+
+        for(let col = 0; col < maxNum; col++) {
+        const used = [];
+
+        for(let row = 0; row < maxNum; row++) {
+            const square = Math.floor(row / squareDataW) * squareW + Math.floor(col / squareDataH);
+
+            const cell = (row % squareDataH) * squareDataW + (col % squareDataW);
+
+            const val = board[row][col];
+
+            if(val === '') continue;
+
+            if(used.includes(val)) {
+                return true;
+            }
+
+            used.push(val)
+        }
+    }
+    
     return false;
 }
 
@@ -225,8 +276,7 @@ function again() {
 }
 
 function lose() {
-    if(square()) again();
-    if(rowCol()) again();
+    if(square() || rowCol()) again();
 }
 
 // start
@@ -237,6 +287,6 @@ btn.addEventListener('click', () => {
     addChoose()
     hideFun(display)
     showFun(numCon)
-    game()
+    // game()
     time()
 })
