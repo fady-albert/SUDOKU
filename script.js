@@ -23,6 +23,7 @@ let second = 0;
 let timerId;
 let board;
 let winner = false;
+let timerVar;
 
 // mode function
 function mode() {
@@ -299,8 +300,14 @@ function time() {
         const secs = Math.floor(second % 60);
 
         timer.textContent = `${String(minutes).padStart(2, '0')} : ${String(secs).padStart(2, '0')}`
-        
-        if(winner) localStorage.setItem('high', String(minutes).padStart(2, '0') + ':' + String(secs).padStart(2, '0'));
+
+        // if (winner) {
+        //     let highScore = localStorage.getItem("high");
+
+        //     if (highScore === null || second < Number(highScore)) {
+        //         localStorage.setItem("high", second);
+        //     }
+        // }
 
     }, 1000)
 
@@ -314,23 +321,43 @@ function again() {
     numCon.innerHTML = ``;
     second = 0;
     clearInterval(timerId);
-    timer.textContent = localStorage.getItem('high');
+    timer.textContent = '00 : 00';
     setTimeout(() => {
         mainCon.innerHTML = ``;
     }, 500);
 }
 
 function win() {
-    again()
     winner = true
     head.textContent = 'you win';
     btn.textContent = 'play again';
-    high.textContent = localStorage.getItem('high');
+
+        if (winner) {
+            let highScore = localStorage.getItem("high");
+
+            if (!highScore || second < Number(highScore)) {
+                localStorage.setItem("high", second);
+            }
+        }
+
+    highScore()
+    again()
 }
 
 function lose() {
     head.textContent = 'you lose';
     btn.textContent = 'play again';
+}
+
+function highScore() {
+    const highS = localStorage.getItem("high");
+
+    if (highS) {
+        const minutes = Math.floor(highS / 60);
+        const secs = highS % 60;
+
+        high.textContent = `${String(minutes).padStart(2, '0')} : ${String(secs).padStart(2, '0')}`;
+    }
 }
 
 function action() {
@@ -414,4 +441,4 @@ btn.addEventListener('click', () => {
     time()
 })
 
-high.textContent = localStorage.getItem('high');
+highScore()

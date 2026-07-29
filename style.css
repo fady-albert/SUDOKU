@@ -2,7 +2,6 @@
 :root {
     --white: #F5F7F8;
     --black: #45474B;
-    --yellow: #F4CE14;
     --green: #495E57;
 }
 
@@ -201,6 +200,16 @@ body.dark .numCon button{
 
 body.dark .numCon button.active{
     background: var(--black);
+    color: var(--white);
+}
+
+.numCon button:disabled{
+    background: var(--green);
+    color: var(--white);
+}
+
+body.dark .numCon button:disabled{
+    background: var(--green);
     color: var(--white);
 }
 
