@@ -9,13 +9,22 @@ const head = document.getElementById('head');
 const high = document.getElementById('high');
 const btn = document.getElementById('btn');
 const timer = document.getElementById('timer');
+const chooseS = document.getElementById('chooseS');
+const b2 = document.getElementById('2');
+const b3 = document.getElementById('3');
+const b4 = document.getElementById('4');
+const b5 = document.getElementById('5');
+const easy = document.getElementById('e');
+const medium = document.getElementById('m');
+const hard = document.getElementById('h');
+const chooseL = document.getElementById('level');
 
 // js data
 const savedMode = localStorage.getItem('mode') || '';
-let squareH = 2;
-let squareW = 2;
-let squareDataH = 2;
-let squareDataW = 2;
+let squareH;
+let squareW;
+let squareDataH;
+let squareDataW;
 let max = 100;
 let nums = [];
 let choosenNum = 0;
@@ -24,6 +33,7 @@ let timerId;
 let board;
 let winner = false;
 let timerVar;
+let level;
 
 // mode function
 function mode() {
@@ -301,14 +311,6 @@ function time() {
 
         timer.textContent = `${String(minutes).padStart(2, '0')} : ${String(secs).padStart(2, '0')}`
 
-        // if (winner) {
-        //     let highScore = localStorage.getItem("high");
-
-        //     if (highScore === null || second < Number(highScore)) {
-        //         localStorage.setItem("high", second);
-        //     }
-        // }
-
     }, 1000)
 
 }
@@ -429,16 +431,54 @@ function SUTN() {
 
 // start
 btn.addEventListener('click', () => {
+    hideFun(display)
+    showFun(chooseS)
+})
+
+b2.addEventListener('click', () => {
+    squareW = 2;
+    squareH = 2;
+    squareDataH = 2;
+    squareDataW = 2;
+    hideFun(chooseS)
+    showFun(chooseL)
+})
+
+b3.addEventListener('click', () => {
+    squareW = 3;
+    squareH = 3;
+    squareDataH = 3;
+    squareDataW = 3;
+    hideFun(chooseS)
+    showFun(chooseL)
+})
+
+easy.addEventListener('click', () => {
+    level = Math.floor(((squareH * squareW) * (squareH * squareW)) * 0.4)
+    make()
+})
+
+medium.addEventListener('click', () => {
+    level = Math.floor(((squareH * squareW) * (squareH * squareW)) * 0.55)
+    make()
+})
+
+hard.addEventListener('click', () => {
+    level = Math.floor(((squareH * squareW) * (squareH * squareW)) * 0.7)
+    make()
+})
+
+function make() {
     createSquare()
     start()
-    del(10)
+    del(level)
     render()
     numbers()
     choose()
     addChoose()
-    hideFun(display)
+    hideFun(chooseL)
     showFun(numCon)
     time()
-})
+}
 
 highScore()
