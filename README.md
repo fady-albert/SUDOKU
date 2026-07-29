@@ -65,7 +65,7 @@ SUDOKU/
 Clone the repository:
 
 ```bash
-git clone [https://github.com/fady-albert/SUDOKU.git]
+git clone https://github.com/fady-albert/SUDOKU.git
 ```
 
 Open the project folder and run:
